@@ -24,6 +24,14 @@ public class TokenTable {
         tokensMap.put("while", TokenCategory.INSWHILE);
         tokensMap.put("whilecontrol", TokenCategory.INSWCTRL);
 
+        /* SPECIAL WORDS */
+        tokensMap.put("initializeApp", TokenCategory.SWINIT);
+        tokensMap.put("readin", TokenCategory.SWREAD);
+        tokensMap.put("printout", TokenCategory.SWPRINT);
+        tokensMap.put("foo", TokenCategory.SWFUNC);
+        tokensMap.put("empty", TokenCategory.SWEMPTY);
+        tokensMap.put("return", TokenCategory.SWRETURN);
+
         /* SEPARATORS */
         tokensMap.put("(", TokenCategory.PARENSTART);
         tokensMap.put(")", TokenCategory.PARENEND);
@@ -53,14 +61,6 @@ public class TokenTable {
         tokensMap.put("<", TokenCategory.OPLT);
         tokensMap.put(">=", TokenCategory.OPLTEQ);
         tokensMap.put("<=", TokenCategory.OPGTEQ);
-
-        /* SPECIAL WORDS */
-        tokensMap.put("initializeApp", TokenCategory.SWINIT);
-        tokensMap.put("readin", TokenCategory.SWREAD);
-        tokensMap.put("printout", TokenCategory.SWPRINT);
-        tokensMap.put("foo", TokenCategory.SWFUNC);
-        tokensMap.put("empty", TokenCategory.SWEMPTY);
-        tokensMap.put("return", TokenCategory.SWRETURN);
     }
 
     public static TokenCategory getTokenClass(String lex) {
