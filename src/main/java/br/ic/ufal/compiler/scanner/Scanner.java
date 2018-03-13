@@ -13,7 +13,7 @@ public class Scanner {
     private char currentChar;
     private int row = 1, col = 1;
 
-    public Scanner(File fileToParse) throws FileNotFoundException{
+    public Scanner(File fileToParse) throws FileNotFoundException {
         bufferReader = new BufferedReader(new FileReader(fileToParse));
         currentChar = getNextChar();
     }
@@ -24,7 +24,10 @@ public class Scanner {
 
         iterateUntilValidChar();
 
-        if(currentChar == EOF) { return null; }
+        if (currentChar == EOF) {
+            System.out.println("EOF");
+            return null;
+        }
 
         if (isDivisionSlash()) { // If it's not a division, it's a comment
             new Token(TokenCategory.OPARITDIV, "/", row, col);
@@ -54,7 +57,7 @@ public class Scanner {
             currentChar = getNextChar();
             int dots = 0;
 
-            while (Character.isDigit(currentChar) || currentChar == '.'){
+            while (Character.isDigit(currentChar) || currentChar == '.') {
                 if (currentChar == '.') {
                     dots++;
                 }
@@ -73,8 +76,8 @@ public class Scanner {
             lexicalValue += currentChar;
             currentChar = getNextChar();
 
-            while(currentChar != '"'){
-                if (currentChar == '\n'){
+            while(currentChar != '"') {
+                if (currentChar == '\n') {
                     throw new InvalidTokenException(row, col,
                             "Invalid token. A '\"' was expected: \"" + lexicalValue + "\"\n");
                 }
@@ -107,15 +110,50 @@ public class Scanner {
                 throw new InvalidTokenException(row, col,
                         "Invalid token. A \"\'\" was expected: \"" + lexicalValue + "\"\n");
             }
-        } else {
-            currCategory = null;
+        }
+        // ### Checking for Operator
+        else {
+            lexicalValue += currentChar;
+
+            if (TokenTable.contains(lexicalValue)) {
+                currentChar = getNextChar();
+                // 2-Digit Operators: ==  !=  >=  <=
+                if (TokenTable.contains(lexicalValue+currentChar)) {
+                    lexicalValue += currentChar;
+                    currentChar = getNextChar();
+                    currCategory = TokenTable.getTokenClass(lexicalValue);
+                }
+                // 1-Digit Operators: (  )  [  ]  {  }  ,  ;  .  +  -  *  /  %  =  !  >  <
+                else {
+                    if (lastTokenWasANumberOrId() && lexicalValue.equals("-")){
+                        currCategory = TokenCategory.OPARITSUB;
+                    } else if (!lastTokenWasANumberOrId() && lexicalValue.equals("-")){
+                        currCategory = TokenCategory.OPNEGUN;
+                    } else if (lastTokenWasACharOrString() && lexicalValue.equals("+")) {
+                        currCategory = TokenCategory.OPCONC;
+                    } else {
+                        currCategory = TokenTable.getTokenClass(lexicalValue);
+                    }
+                }
+            }
+            // Logic Operators: ||  &&
+            else {
+                currentChar = getNextChar();
+                if (TokenTable.contains(lexicalValue + currentChar)){
+                    lexicalValue += currentChar;
+                    currCategory = TokenTable.getTokenClass(lexicalValue);
+                    currentChar = getNextChar();
+                } else {
+                    throw new InvalidTokenException(row, col, "Invalid token: \"" + lexicalValue + "\"\n");
+                }
+            }
         }
 
         prevTokenCateg = currCategory;
         return new Token(currCategory, lexicalValue, row, col);
     }
 
-    private char getNextChar(){
+    private char getNextChar() {
         char nextChar;
         try {
             nextChar = (char) bufferReader.read();
@@ -129,7 +167,7 @@ public class Scanner {
 
     private void iterateUntilValidChar() {
         while (Character.isWhitespace(currentChar)){
-            if(currentChar == '\n'){
+            if (currentChar == '\n') {
                 col = 0;
                 row++;
             }
@@ -141,10 +179,10 @@ public class Scanner {
         if (currentChar == '/') {
             currentChar = getNextChar();
 
-            if (currentChar == '/'){
+            if (currentChar == '/') {
                 // Go to next line
                 currentChar = getNextChar();
-                while (currentChar != '\n'){
+                while (currentChar != '\n') {
                     col = 0;
                     row++;
                     currentChar = getNextChar();
@@ -158,4 +196,16 @@ public class Scanner {
         }
         return false;
     }
+
+    private boolean lastTokenWasANumberOrId() {
+        return (prevTokenCateg == TokenCategory.ID
+                || prevTokenCateg == TokenCategory.CONSNUM
+                || prevTokenCateg == TokenCategory.BRACKEND
+                || prevTokenCateg == TokenCategory.PARENEND);
+    }
+
+    private boolean lastTokenWasACharOrString() {
+        return (prevTokenCateg == TokenCategory.CONSCHAR || prevTokenCateg == TokenCategory.CONSSTRING);
+    }
+
 }
