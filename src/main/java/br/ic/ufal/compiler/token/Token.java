@@ -25,8 +25,8 @@ public class Token {
 
     @Override
     public String toString() {
-        return  "[" + this.row + ", " + this.col + "] " +
+        return  "[" + this.row + ", " + this.col + "]\t" +
                 "(" + category + ", " + category.getValue() + ") " +
-                "{" + this.lexicalValue + "} \n";
+                "{" + this.lexicalValue + "}";
     }
 }
