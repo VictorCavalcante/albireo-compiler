@@ -1,3 +1,3 @@
 foo empty initializeApp() {
-    return (yes || #);
+    printout("Alo Mundo");
 }

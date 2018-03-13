@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by victor on 11/03/18.
  */
-public class MainTest {
+public class AlbireoCompilerTest {
     @Test
     public void main() throws Exception {
 

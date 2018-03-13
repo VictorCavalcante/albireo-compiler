@@ -9,16 +9,20 @@ import java.io.IOException;
 /**
  * @author Victor Cavalcante
  */
-public class Main {
+public class AlbireoCompiler {
 
     public static void main(String[] args) throws FileNotFoundException, InvalidTokenException {
 
         try {
-            File albFile = new File(Main.getAbsolutePath("hello-world.alb"));
-            Parser albParser = new Parser(albFile);
+            if (args.length > 0) {
+                System.out.println(args[0]);
+                File albFile = new File(AlbireoCompiler.getAbsolutePath(args[0]));
+                Parser albParser = new Parser(albFile);
 
-            albParser.listTokens();
-
+                albParser.listTokens();
+            } else {
+                System.out.println("Filename not specified");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,7 +30,7 @@ public class Main {
     }
 
     private static String getAbsolutePath(String filename) {
-        return System.getProperty("user.dir") + File.separator + "src/main/resources/" + filename;
+        return System.getProperty("user.dir") + File.separator + filename;
     }
 
 }

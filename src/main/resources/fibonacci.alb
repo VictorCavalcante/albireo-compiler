@@ -1,0 +1,24 @@
+foo empty fibonacci() {
+    int numOfTerms, next, first = 0, second = 1;
+
+    readin(int numOfTerms); // Ler numero de termos
+    printout("Primeiros " + numOfTerms + " termos:");
+
+    whilecontrol (int i = 0 ; i < numOfTerms ; i = i + 1) {
+      if ( i <= 1 ) do {
+         next = i;
+      } else do {
+         next = first + second;
+         first = second;
+         second = next;
+      }
+      printout(next);
+      if (i != numOfTerms - 1) do {
+        printout(", ");
+      }
+   }
+}
+
+foo empty initializeApp() {
+    fibonacci(5);
+}
