@@ -20,6 +20,7 @@ public class TokenTable {
 
         /* INSTRUCTIONS*/
         tokensMap.put("if", TokenCategory.INSIF);
+        tokensMap.put("do", TokenCategory.INSDO);
         tokensMap.put("else", TokenCategory.INSELSE);
         tokensMap.put("while", TokenCategory.INSWHILE);
         tokensMap.put("whilecontrol", TokenCategory.INSWCTRL);
