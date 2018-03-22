@@ -71,7 +71,7 @@ public class Scanner {
             }
             currCategory = TokenCategory.CONSNUM;
         }
-        // ### Checking for String
+        // ### Checking for String (starting with ")
         else if (currentChar == '"') {
             lexicalValue += currentChar;
             currentChar = getNextChar();
@@ -89,7 +89,7 @@ public class Scanner {
             currentChar = getNextChar();
             currCategory = TokenCategory.CONSSTRING;
         }
-        // ### Checking for Character
+        // ### Checking for Character (starting with ')
         else if (currentChar == '\'') {
             lexicalValue += currentChar;
             currentChar = getNextChar();
@@ -115,16 +115,16 @@ public class Scanner {
         else {
             lexicalValue += currentChar;
 
+            // Contains 1-Digit Operator: (  )  [  ]  {  }  ,  ;  .  +  -  *  /  %  =  !  >  <
             if (TokenTable.contains(lexicalValue)) {
                 currentChar = getNextChar();
-                // 2-Digit Operators: ==  !=  >=  <=
+                // Contains 2-Digit Operator: ==  !=  >=  <=
                 if (TokenTable.contains(lexicalValue+currentChar)) {
                     lexicalValue += currentChar;
                     currentChar = getNextChar();
                     currCategory = TokenTable.getTokenClass(lexicalValue);
-                }
-                // 1-Digit Operators: (  )  [  ]  {  }  ,  ;  .  +  -  *  /  %  =  !  >  <
-                else {
+                } else {
+                    // 1-Digit Operator & check for ambiguity
                     if (lastTokenWasANumberOrId() && lexicalValue.equals("-")){
                         currCategory = TokenCategory.OPARITSUB;
                     } else if (!lastTokenWasANumberOrId() && lexicalValue.equals("-")){
