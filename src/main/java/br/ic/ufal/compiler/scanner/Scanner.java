@@ -30,7 +30,7 @@ public class Scanner {
         }
 
         if (isDivisionSlash()) { // If it's not a division, it's a comment
-            new Token(TokenCategory.OPARITDIV, "/", row, col);
+            return new Token(TokenCategory.OPARITDIV, "/", row, col);
         }
 
         iterateUntilValidChar();
