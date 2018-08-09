@@ -19,8 +19,8 @@ public class Parser {
         try {
             Token currentToken = this.scanner.nextToken();
 
-            System.out.println("Parsing: " + this.fileName);
-            System.out.println("-----------------------------");
+//            System.out.println("Parsing: " + this.fileName);
+//            System.out.println("-----------------------------");
             while (currentToken != null) {
                 System.out.println(currentToken);
                 currentToken = this.scanner.nextToken();

@@ -25,7 +25,7 @@ public class Token {
 
     @Override
     public String toString() {
-        return  "[" + String.format("%02d", this.row) + ", " + String.format("%02d", this.col) + "] " +
+        return  "[" + String.format("%04d", this.row) + ", " + String.format("%04d", this.col) + "] " +
                 "(" + String.format("%04d", this.category.getValue()) + ", " + String.format("%10s", this.category) + ") " +
                 "{" + this.lexicalValue + "}";
     }
