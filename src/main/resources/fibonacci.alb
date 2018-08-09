@@ -1,10 +1,7 @@
-foo empty fibonacci() {
-    int numOfTerms, next, first = 0, second = 1;
+foo empty fibonacci(int numOfTerms) {
+    int next, first = 0, second = 1;
 
-    readin(int numOfTerms); // Ler numero de termos
-    printout("Primeiros " + numOfTerms + " termos:");
-
-    whilecontrol (int i = 0 ; i < numOfTerms ; i = i + 1) {
+    whilecontrol (int i = 0 : numOfTerms - 1) {
       if ( i <= 1 ) do {
          next = i;
       } else do {
@@ -20,5 +17,9 @@ foo empty fibonacci() {
 }
 
 foo empty initializeApp() {
-    fibonacci(5);
+    int numOfTerms;
+    readin(int numOfTerms); // Ler numero de termos
+    printout("Primeiros " + numOfTerms + " termos:");
+
+    fibonacci(numOfTerms);
 }

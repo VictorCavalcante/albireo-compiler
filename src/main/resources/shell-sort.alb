@@ -1,4 +1,4 @@
-foo empty shellSort(int vet[], int size) {
+foo empty shellSort(group int vet, int size) {
     int i, j, value, gap = 1;
 
     while (gap < size) {
@@ -6,7 +6,7 @@ foo empty shellSort(int vet[], int size) {
     }
     while ( gap > 1) {
         gap = gap / 3;
-        whilecontrol (i = gap; i < size; i++) {
+        whilecontrol (int i = gap : size - 1) {
             value = vet[i];
             j = i - gap;
             while (j >= 0 && value < vet[j]) {
@@ -19,6 +19,10 @@ foo empty shellSort(int vet[], int size) {
 }
 
 foo empty initializeApp() {
-    group int num[5] = { 7, 123, 34, 52, 0 };
+    group int num[5];
+    whilecontrol (int i = 0 : 4) {
+        readin(num[i]);
+    }
+
     shellsort(num, 5);
 }
