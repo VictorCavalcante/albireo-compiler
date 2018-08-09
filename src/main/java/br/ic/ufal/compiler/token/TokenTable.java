@@ -41,6 +41,7 @@ public class TokenTable {
         tokensMap.put("{", TokenCategory.CURLYSTART);
         tokensMap.put("}", TokenCategory.CURLYEND);
         tokensMap.put(",", TokenCategory.COMMASEP);
+        tokensMap.put(":", TokenCategory.COLONSEP);
         tokensMap.put(";", TokenCategory.SEMICOLSEP);
         tokensMap.put(".", TokenCategory.DOTSEP);
 

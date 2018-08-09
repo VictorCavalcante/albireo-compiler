@@ -65,11 +65,14 @@ public class Scanner {
                 currentChar = getNextChar();
             }
 
-            if (dots > 1) {
+            if(dots == 0) {
+                currCategory = TokenCategory.CONSINT;
+            } else if (dots == 1) {
+                currCategory = TokenCategory.CONSFLOAT;
+            } else {
                 throw new InvalidTokenException(row, col,
                         "Invalid token. A float was expected: \"" + lexicalValue + "\"\n");
             }
-            currCategory = TokenCategory.CONSNUM;
         }
         // ### Checking for String (starting with ")
         else if (currentChar == '"') {
@@ -199,7 +202,8 @@ public class Scanner {
 
     private boolean lastTokenWasANumberOrId() {
         return (prevTokenCateg == TokenCategory.ID
-                || prevTokenCateg == TokenCategory.CONSNUM
+                || prevTokenCateg == TokenCategory.CONSFLOAT
+                || prevTokenCateg == TokenCategory.CONSINT
                 || prevTokenCateg == TokenCategory.BRACKEND
                 || prevTokenCateg == TokenCategory.PARENEND);
     }
